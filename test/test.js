@@ -1,12 +1,17 @@
 var sys = require('sys'),
     crypto = require('crypto'),
     sharding = require('../lib/redis-sharding'),
-    redis = require('./lib/redis-client');
+    redis = require('../lib/redis-client');
     
 //var client = redis.createClient(6379, '192.168.178.38');
 //client.select(1);
     
-var client = sharding.createShard([{'host' : '192.168.178.38','port' : 6379,'dbindex' : 1}]);
+var client = sharding.createShard([
+    {'host' : '192.168.56.101','port' : 6379,'dbindex' : 1},
+    {'host' : '192.168.56.102','port' : 6379,'dbindex' : 1},
+    {'host' : '192.168.56.103','port' : 6379,'dbindex' : 1}
+]);
+
 
 client.flushdb(function() {
     sys.log('DB Flushed');
@@ -51,16 +56,9 @@ client.exists('foo6', function(err, value) {if (value) sys.log('yeah'); else sys
 client.del('foo6', function(){});
 client.exists('foo6', function(err, value) {if (value) sys.log('yeah'); else sys.log('no');});
 
-client.renamenx('foo5', 'foonew5', function(err, val){sys.debug(err);});
-client.get('foonew5', function(err, value) {sys.log(value)});
-client.exists('foonew5', function(err, value) {if (value) sys.log('yeah'); else sys.log('no');});
 
 client.set('foo7', 'bar7', function(){});
 client.set('foo8', 'bar8', function(){});
-
-client.rename('foo7', 'foo8', function(err, val){});
-client.get('foo8', function(err, value) {sys.log(value)});
-client.exists('foo7', function(err, value) {if (value) sys.log('yeah'); else sys.log('no');});
 
 client.type('foo8', function(err, val){sys.debug(val);});
 

@@ -3,14 +3,14 @@ var crypto = require('crypto'),
       http = require('http'),
       sys = require('sys'),
       sharding = require('../lib/redis-sharding'),
-      redis = require('./lib/redis-client'); // requires the redit client 
+      redis = require('../lib/redis-client'); // requires the redit client 
                                              // http://github.com/fictorial/redis-node-client/
 
-var client = sharding.createShard([{
-        'host' : '192.168.178.38',
-        'port' : 6379,
-        'dbindex' : 1
-    }]);
+var client = sharding.createShard([
+    {'host' : '192.168.56.101','port' : 6379,'dbindex' : 1},
+    {'host' : '192.168.56.102','port' : 6379,'dbindex' : 1},
+    {'host' : '192.168.56.103','port' : 6379,'dbindex' : 1}
+]);
     
 // empty the database before test
 client.flushdb();
@@ -32,7 +32,7 @@ var counter = 0,
     d1 = new Date();
 
 for(var i = 0; i < opsToPerform; i += 1) {
-    client.set('foo' + i, 'bar', function(err, value){
+    client.set('foo' + i, 'bar' + i, function(err, value){
         counter += 1;
         if (counter >= opsToPerform) {
             allDone(new Date());
