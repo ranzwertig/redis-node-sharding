@@ -32,7 +32,7 @@ var counter = 0,
     d1 = new Date();
 
 for(var i = 0; i < opsToPerform; i += 1) {
-    client.set('foo' + i, 'bar' + i, function(err, value){
+    client.set('folo' + i, 'bar' + i, function(err, value){
         counter += 1;
         if (counter >= opsToPerform) {
             allDone(new Date());

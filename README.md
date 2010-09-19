@@ -6,12 +6,6 @@ The module provides sharding by consistent hashing.
 Careful: this module is in a very early state of development. Some of the functions
 are not implemented yet.
 
-## TODO
-
-* rename and renamenx requires additional computation
-* use BigInt to calculate the hash for selecting the shard (currently just works with a odd number of servers)
-* ...
-
 ### How to use this
 
 After the initialisation it can be used exactly like Fictorials module.

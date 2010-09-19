@@ -12,7 +12,6 @@ var client = sharding.createShard([
     {'host' : '192.168.56.103','port' : 6379,'dbindex' : 1}
 ]);
 
-
 client.flushdb(function() {
     sys.log('DB Flushed');
 });
